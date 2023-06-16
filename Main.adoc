@@ -1,0 +1,91 @@
+= {subject}
+:subject: Using Ansible with Windows
+:description: Guide to Setting Up Widows and Ansible
+Travis Michette <tmichett@redhat.com>
+:doctype: book
+:customer:  GLS
+:listing-caption: Listing
+:toc:
+:toclevels: 7
+:sectnums:
+:sectnumlevels: 6
+:numbered:
+:chapter-label:
+:pdf-page-size: LETTER
+:icons: font
+ifdef::backend-pdf[]
+:title-page-background-image: image:images/Training_Cover.png[pdfwidth=8.0in,position=top left]
+:pygments-style: tango
+:source-highlighter: pygments
+endif::[]
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:revnumber: 1.1
+
+// Introduction Section goes below here
+
+//:sectnums!:
+//include::Introduction.adoc[]
+
+:sectnums:
+
+= Preparing a Windows System
+
+== Packages to Install 
+
+* Windows 7, 8.1, 10, 11 or Windows Server 2008, 2008 R2, 2012, 2012 R2, 2016, 2019, 2022
+* PowerShell 3.0+
+* .NET 4.0+
+* WinRM
+
+
+[IMPORTANT]
+======
+While you need to have the above conditions, there also needs to be a user for Ansible to use. If the user is installing software or needing to perform administrative functions, then you must have the user in an *administrator* group.
+======
+
+
+
+=== Checking Powershell Version and .Net Version
+
+.Checking *.NET* Version
+[source,bash]
+----
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name version -EA 0 | Where { $_.PSChildName -Match '^(?!S)\p{L}'} | Select PSChildName, version
+----
+
+
+
+=== Enabling WinRM
+
+
+.Checking *WINRM* Configuration Status
+[source,bash]
+----
+winrm get winrm/config/Service
+----
+
+
+.Setup and Configure *WINRM* and PowerShell Execution Policy
+[source,bash]
+----
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+$file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+(New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+powershell.exe -ExecutionPolicy ByPass -File $file
+----
+
+.Verifying *WINRM* Configuration Status
+[source,bash]
+----
+winrm get winrm/config/Service
+----

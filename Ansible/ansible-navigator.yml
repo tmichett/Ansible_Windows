@@ -1,0 +1,13 @@
+---
+ansible-navigator:
+  ansible:
+    config: ./ansible.cfg
+
+  execution-environment:
+    image: quay.io/tmichett/travis_do374:1.0
+    pull-policy: missing
+
+  playbook-artifact:
+    enable: false
+
+  mode: stdout
