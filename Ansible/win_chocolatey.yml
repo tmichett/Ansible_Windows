@@ -1,0 +1,12 @@
+---
+- name: win_chocolatey module install
+  hosts: windows
+  become: false
+  gather_facts: false
+  tasks:
+
+    - name: Removing Created File 
+      chocolatey.chocolatey.win_chocolatey:
+        name: chocolatey
+        state: present
+
