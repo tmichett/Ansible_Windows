@@ -98,4 +98,6 @@ winrm get winrm/config/Service
 Chocolatey is the package manager that will be used by Ansible to install software packages and manage non-Microsoft packages and components. This can be used in addition to things like Windows SCCM and other MS Tools.
 
 https://github.com/chocolatey/chocolatey-ansible
+
+Repository: https://community.chocolatey.org/
 =====
