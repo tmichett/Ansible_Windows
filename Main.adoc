@@ -56,6 +56,8 @@ While you need to have the above conditions, there also needs to be a user for A
 
 === Checking Powershell Version and .Net Version
 
+The following commands should be typed in a PowerShell command window. As this will require elevated privileges you should be running as an Administrator.
+
 .Checking *.NET* Version
 [source,bash]
 ----
